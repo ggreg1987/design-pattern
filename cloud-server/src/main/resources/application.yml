@@ -1,3 +1,6 @@
 spring:
   application:
     name: cloud-server
+
+server:
+  port: 8761
