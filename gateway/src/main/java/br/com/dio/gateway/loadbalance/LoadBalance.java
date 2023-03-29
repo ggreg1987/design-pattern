@@ -11,7 +11,6 @@ public class LoadBalance {
   @Bean
   public RouteLocator routes(RouteLocatorBuilder builder) {
     return builder.routes()
-        //registrando o microserviço para fazer balanceamento de carga
         .route(r -> r.path("/person/**").uri("lb://ms-person"))
         .build();
   }
