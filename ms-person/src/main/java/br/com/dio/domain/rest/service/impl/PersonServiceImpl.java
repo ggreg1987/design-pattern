@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
   public Person save(Person person) {
     existsPerson(person);
     try {
-      return repository.save(person);
+      return saveAndSend(person);
     } catch (DataIntegrityViolationException ex) {
       throw new CharacterLimitException("Character limit.");
     }
