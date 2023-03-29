@@ -47,4 +47,11 @@ public class PersonResource {
     service.delete(cpf);
   }
 
+  @GetMapping(produces = APPLICATION_JSON_VALUE)
+  @ResponseStatus(OK)
+  public PersonDTO findAll(@RequestBody Person person) {
+    var entity = service.findAll(person);
+    return mapper.convertValue(entity, PersonDTO.class);
+  }
+
 }
