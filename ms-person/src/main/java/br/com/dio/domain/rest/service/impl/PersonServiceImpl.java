@@ -34,6 +34,16 @@ public class PersonServiceImpl implements PersonService {
         .orElseThrow(() -> new CpfNotFoundException("Cpf not Found"));
   }
 
+  @Override
+  public Person update(Person person, String cpf) {
+    return repository
+        .findById(cpf)
+        .map(found -> {
+          found.setCpf(person.getCpf());
+          return person;
+        }).orElseThrow(() -> new CpfNotFoundException("Cpf not Found"));
+  }
+
   private Person existsPerson(Person person) {
     if (repository.existsByCpf(person.getCpf())) {
       throw new CpfBadRequestException("Cpf already exists");
