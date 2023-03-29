@@ -2,10 +2,13 @@ package br.com.dio.domain.rest.service.impl;
 
 import br.com.dio.domain.entity.Person;
 import br.com.dio.domain.repository.PersonRepository;
+import br.com.dio.domain.rest.dto.PersonDTO;
 import br.com.dio.domain.rest.service.PersonService;
 import br.com.dio.exception.CharacterLimitException;
 import br.com.dio.exception.CpfBadRequestException;
 import br.com.dio.exception.CpfNotFoundException;
+import br.com.dio.rabbitMessage.SendMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
@@ -21,6 +24,8 @@ import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTA
 public class PersonServiceImpl implements PersonService {
 
   private final PersonRepository repository;
+  private final SendMessage message;
+  private final ObjectMapper mapper;
 
   @Override
   public Person save(Person person) {
@@ -77,5 +82,12 @@ public class PersonServiceImpl implements PersonService {
       throw new CpfBadRequestException("Cpf already exists");
     }
     return person;
+  }
+
+  private Person saveAndSend(Person person) {
+    var entity = repository.save(person);
+    var dto = mapper.convertValue(entity, PersonDTO.class);
+    message.sendMessage(dto);
+    return entity;
   }
 }
