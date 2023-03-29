@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -39,6 +38,12 @@ public class PersonResource {
   public PersonDTO update(@RequestBody Person person ,@PathVariable String cpf) {
     var entity = service.update(person,cpf);
     return mapper.convertValue(entity, PersonDTO.class);
+  }
+
+  @DeleteMapping("{cpf}")
+  @ResponseStatus(NO_CONTENT)
+  public void delete(@PathVariable String cpf) {
+    service.delete(cpf);
   }
 
 }
