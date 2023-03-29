@@ -5,6 +5,7 @@ import br.com.dio.domain.repository.PersonRepository;
 import br.com.dio.domain.rest.service.PersonService;
 import br.com.dio.exception.CharacterLimitException;
 import br.com.dio.exception.CpfBadRequestException;
+import br.com.dio.exception.CpfNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,13 @@ public class PersonServiceImpl implements PersonService {
       throw new CharacterLimitException("Character limit.");
     }
 
+  }
+
+  @Override
+  public Person findByCpf(String cpf) {
+    return repository
+        .findById(cpf)
+        .orElseThrow(() -> new CpfNotFoundException("Cpf not Found"));
   }
 
   private Person existsPerson(Person person) {
