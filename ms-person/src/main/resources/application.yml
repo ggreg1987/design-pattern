@@ -17,3 +17,8 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+rabbitmq:
+  person:
+    exchange: person-exchange
+    routing-key: person-routing-key
+
