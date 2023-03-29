@@ -1,9 +1,12 @@
-package br.com.dio.domain.rest.service;
+package br.com.dio.domain.rest.service.impl;
 
 import br.com.dio.domain.entity.Person;
 import br.com.dio.domain.repository.PersonRepository;
+import br.com.dio.domain.rest.service.PersonService;
+import br.com.dio.exception.CharacterLimitException;
 import br.com.dio.exception.CpfBadRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +18,12 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public Person save(Person person) {
     existsPerson(person);
-    return repository.save(person);
+    try {
+      return repository.save(person);
+    } catch (DataIntegrityViolationException ex) {
+      throw new CharacterLimitException("Character limit.");
+    }
+
   }
 
   private Person existsPerson(Person person) {
