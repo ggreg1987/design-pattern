@@ -1,3 +1,8 @@
 spring:
   application:
     name: ms-person
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: greg
+    password: 12345
