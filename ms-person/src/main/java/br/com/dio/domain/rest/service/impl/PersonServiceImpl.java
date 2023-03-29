@@ -8,9 +8,13 @@ import br.com.dio.exception.CpfBadRequestException;
 import br.com.dio.exception.CpfNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTAINING;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +63,13 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   public List<Person> findAll(Person person) {
-    return null;
+    ExampleMatcher matcher = ExampleMatcher
+        .matching()
+        .withIgnoreCase()
+        .withStringMatcher(CONTAINING);
+    Example example = Example.of(person,matcher);
+
+    return repository.findAll(example);
   }
 
   private Person existsPerson(Person person) {
