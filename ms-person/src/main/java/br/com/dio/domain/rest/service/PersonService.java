@@ -5,6 +5,7 @@ import br.com.dio.domain.entity.Person;
 public interface PersonService {
 
   Person save(Person person);
+  Person findByCpf(String cpf)
 
 
 }
