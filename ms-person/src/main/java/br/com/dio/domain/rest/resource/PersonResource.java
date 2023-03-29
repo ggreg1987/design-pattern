@@ -25,14 +25,15 @@ public class PersonResource {
   @ResponseStatus(CREATED)
   public PersonDTO create(@RequestBody Person person) throws Exception {
     var entity = service.save(person);
-    return mapper.convertValue(entity, PersonDTO.class);
+    return toDTO(entity);
   }
 
   @GetMapping(value = "{cpf}",produces = APPLICATION_JSON_VALUE)
   @ResponseStatus(OK)
   public PersonDTO findByCpf(@PathVariable String cpf) {
     var entity = service.findByCpf(cpf);
-    return mapper.convertValue(entity, PersonDTO.class);
+    var dto = mapper.convertValue(entity, PersonDTO.class);
+    return toDTO(entity);
   }
 
   @PutMapping(value = "{cpf}",produces = APPLICATION_JSON_VALUE,
@@ -40,7 +41,8 @@ public class PersonResource {
   @ResponseStatus(SEE_OTHER)
   public PersonDTO update(@RequestBody Person person ,@PathVariable String cpf) {
     var entity = service.update(person,cpf);
-    return mapper.convertValue(entity, PersonDTO.class);
+    var dto = mapper.convertValue(entity, PersonDTO.class);
+    return toDTO(entity);
   }
 
   @DeleteMapping("{cpf}")
@@ -54,6 +56,12 @@ public class PersonResource {
   public PersonDTO findAll(@RequestBody Person person) {
     var entity = service.findAll(person);
     return mapper.convertValue(entity, PersonDTO.class);
+
+  }
+
+  private PersonDTO toDTO(Person person) {
+    var dto = mapper.convertValue(person, PersonDTO.class);
+    return hateos(dto);
   }
 
   private PersonDTO hateos(PersonDTO dto) {
