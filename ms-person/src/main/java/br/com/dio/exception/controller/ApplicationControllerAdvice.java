@@ -1,6 +1,7 @@
 package br.com.dio.exception.controller;
 
 import br.com.dio.exception.ApiError;
+import br.com.dio.exception.CharacterLimitException;
 import br.com.dio.exception.CpfBadRequestException;
 import br.com.dio.exception.CpfNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,12 @@ public class ApplicationControllerAdvice {
   @ExceptionHandler(CpfNotFoundException.class)
   @ResponseStatus(NOT_FOUND)
   public ApiError handleCpfNotFoundException(CpfNotFoundException ex) {
+    return message(ex);
+  }
+
+  @ExceptionHandler(CharacterLimitException.class)
+  @ResponseStatus(BAD_REQUEST)
+  public ApiError handleCharacterLimitException(CharacterLimitException ex) {
     return message(ex);
   }
 
