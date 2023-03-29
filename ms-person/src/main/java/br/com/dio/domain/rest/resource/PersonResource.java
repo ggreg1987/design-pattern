@@ -34,4 +34,11 @@ public class PersonResource {
     return mapper.convertValue(entity, PersonDTO.class);
   }
 
+  @PutMapping(value = "{cpf}",produces = APPLICATION_JSON_VALUE,
+      consumes = APPLICATION_JSON_VALUE)
+  public PersonDTO update(@RequestBody Person person ,@PathVariable String cpf) {
+    var entity = service.update(person,cpf);
+    return mapper.convertValue(entity, PersonDTO.class);
+  }
+
 }
