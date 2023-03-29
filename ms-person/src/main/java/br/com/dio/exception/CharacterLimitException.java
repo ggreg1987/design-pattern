@@ -1,8 +1,10 @@
 package br.com.dio.exception;
 
-public class CharacterLimitException extends RuntimeException {
+import org.springframework.dao.DataIntegrityViolationException;
 
-  public CharacterLimitException(String message) {
-    super(message);
+public class CharacterLimitException extends DataIntegrityViolationException {
+
+  public CharacterLimitException(String msg) {
+    super(msg);
   }
 }
