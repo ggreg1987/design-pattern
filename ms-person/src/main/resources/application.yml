@@ -6,3 +6,6 @@ spring:
     port: 5672
     username: greg
     password: 12345
+
+server:
+  port: 0
