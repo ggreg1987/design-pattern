@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -23,6 +24,13 @@ public class PersonResource {
   @ResponseStatus(CREATED)
   public PersonDTO create(@RequestBody Person person) throws Exception {
     var entity = service.save(person);
+    return mapper.convertValue(entity, PersonDTO.class);
+  }
+
+  @GetMapping(value = "{cpf}",produces = APPLICATION_JSON_VALUE)
+  @ResponseStatus(OK)
+  public PersonDTO findByCpf(@PathVariable String cpf) {
+    var entity = service.findByCpf(cpf);
     return mapper.convertValue(entity, PersonDTO.class);
   }
 
