@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.*;
@@ -53,10 +56,13 @@ public class PersonResource {
 
   @GetMapping(produces = APPLICATION_JSON_VALUE)
   @ResponseStatus(OK)
-  public PersonDTO findAll(@RequestBody Person person) {
-    var entity = service.findAll(person);
-    return mapper.convertValue(entity, PersonDTO.class);
-
+  public List<PersonDTO> findAll(@RequestBody Person person) {
+    var entityList = service.findAll(person);
+    return entityList
+        .stream()
+        .map(onePerson -> {
+          return toDTO(onePerson);
+        }).collect(Collectors.toList());
   }
 
   private PersonDTO toDTO(Person person) {
