@@ -56,6 +56,10 @@ public class PersonResource {
     return mapper.convertValue(entity, PersonDTO.class);
   }
 
-
+  private PersonDTO hateos(PersonDTO dto) {
+    dto.add(linkTo(methodOn(PersonResource.class)
+        .findByCpf(dto.getCpf())).withSelfRel());
+    return dto;
+  }
 
 }
