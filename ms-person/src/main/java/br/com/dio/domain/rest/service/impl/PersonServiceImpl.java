@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements PersonService {
@@ -53,6 +55,11 @@ public class PersonServiceImpl implements PersonService {
           return cpf;
         })
         .orElseThrow(() -> new CpfBadRequestException("Cpf Not Found"));
+  }
+
+  @Override
+  public List<Person> findAll(Person person) {
+    return null;
   }
 
   private Person existsPerson(Person person) {
