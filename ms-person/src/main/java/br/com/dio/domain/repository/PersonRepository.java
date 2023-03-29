@@ -6,4 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
 public interface PersonRepository extends JpaRepository<Person,String> {
+  boolean existsByCpf(String cpf);
 }
