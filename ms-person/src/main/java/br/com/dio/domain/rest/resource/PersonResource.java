@@ -35,7 +35,6 @@ public class PersonResource {
   @ResponseStatus(OK)
   public PersonDTO findByCpf(@PathVariable String cpf) {
     var entity = service.findByCpf(cpf);
-    var dto = mapper.convertValue(entity, PersonDTO.class);
     return toDTO(entity);
   }
 
@@ -44,7 +43,6 @@ public class PersonResource {
   @ResponseStatus(SEE_OTHER)
   public PersonDTO update(@RequestBody Person person ,@PathVariable String cpf) {
     var entity = service.update(person,cpf);
-    var dto = mapper.convertValue(entity, PersonDTO.class);
     return toDTO(entity);
   }
 
@@ -60,9 +58,8 @@ public class PersonResource {
     var entityList = service.findAll(person);
     return entityList
         .stream()
-        .map(onePerson -> {
-          return toDTO(onePerson);
-        }).collect(Collectors.toList());
+        .map(onePerson -> toDTO(onePerson))
+            .collect(Collectors.toList());
   }
 
   @GetMapping("/clear")
