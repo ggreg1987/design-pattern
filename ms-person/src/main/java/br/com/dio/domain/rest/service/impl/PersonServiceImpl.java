@@ -11,6 +11,7 @@ import br.com.dio.rabbitMessage.SendMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
@@ -61,11 +62,13 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
+  @CacheEvict(value = "person")
   public String delete(String cpf) {
     return repository
         .findById(cpf)
         .map(found -> {
           repository.delete(found);
+          log.info("Records deleted {}");
           return cpf;
         })
         .orElseThrow(() -> new CpfBadRequestException("Cpf Not Found"));
