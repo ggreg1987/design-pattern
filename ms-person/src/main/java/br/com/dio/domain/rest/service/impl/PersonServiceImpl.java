@@ -50,6 +50,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
+  @CachePut(value = "person", key = "#result.cpf")
   public Person update(Person person, String cpf) {
     return repository
         .findById(cpf)
