@@ -10,6 +10,8 @@ import br.com.dio.exception.CpfNotFoundException;
 import br.com.dio.rabbitMessage.SendMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -21,6 +23,7 @@ import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTA
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PersonServiceImpl implements PersonService {
 
   private final PersonRepository repository;
@@ -28,6 +31,7 @@ public class PersonServiceImpl implements PersonService {
   private final ObjectMapper mapper;
 
   @Override
+  @CachePut(value = "person", key = "#result.cpf")
   public Person save(Person person) {
     existsPerson(person);
     try {
