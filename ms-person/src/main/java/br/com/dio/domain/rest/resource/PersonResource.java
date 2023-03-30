@@ -50,8 +50,8 @@ public class PersonResource {
 
   @DeleteMapping("{cpf}")
   @ResponseStatus(NO_CONTENT)
-  public void delete(@PathVariable String cpf) {
-    service.delete(cpf);
+  public String delete(@PathVariable String cpf) {
+    return service.delete(cpf);
   }
 
   @GetMapping(produces = APPLICATION_JSON_VALUE)
