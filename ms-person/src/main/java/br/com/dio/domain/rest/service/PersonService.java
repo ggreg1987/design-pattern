@@ -11,6 +11,7 @@ public interface PersonService {
   Person update(Person person,String cpf);
   String delete(String cpf);
   List<Person> findAll(Person person);
+  void clearPersonCache();
 
 
 }
