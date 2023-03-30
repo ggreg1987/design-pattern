@@ -65,15 +65,17 @@ public class PersonResource {
         }).collect(Collectors.toList());
   }
 
-  private PersonDTO toDTO(Person person) {
-    var dto = mapper.convertValue(person, PersonDTO.class);
-    return hateos(dto);
-  }
-
   @GetMapping("/clear")
   @ResponseStatus(OK)
   public String clearPersonCache() {
     return clearPersonCache();
+  }
+
+  
+
+  private PersonDTO toDTO(Person person) {
+    var dto = mapper.convertValue(person, PersonDTO.class);
+    return hateos(dto);
   }
 
   private PersonDTO hateos(PersonDTO dto) {
