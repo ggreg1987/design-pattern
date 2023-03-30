@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -42,9 +43,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
   }
-
+  
   @Override
+  @Cacheable(value = "person")
   public Person findByCpf(String cpf) {
+    log.info("Get Book by ISBN {}", cpf);
     return repository
         .findById(cpf)
         .orElseThrow(() -> new CpfNotFoundException("Cpf not Found"));
