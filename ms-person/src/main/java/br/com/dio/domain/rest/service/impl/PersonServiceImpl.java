@@ -35,12 +35,12 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   @CachePut(value = "person", key = "#result.cpf")
-  public Person save(Person person) {
+  public Person save(Person person) throws CharacterLimitException {
     existsPerson(person);
     try {
       return saveAndSend(person);
-    } catch (DataIntegrityViolationException ex) {
-      throw new CharacterLimitException("Character limit.");
+    } catch (Exception ex) {
+      throw new CharacterLimitException("Character error.");
     }
 
   }
