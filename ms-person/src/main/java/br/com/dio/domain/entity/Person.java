@@ -22,7 +22,7 @@ import java.util.Objects;
 public class Person implements Serializable {
 
   @Id @CPF
-  @Column(name = "CPF", length = 11)
+  @Column(name = "CPF", length = 11,updatable = false)
   private String cpf;
   @Column(name = "NAME", nullable = false, length = 30)
   @NotEmpty
