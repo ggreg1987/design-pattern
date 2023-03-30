@@ -24,8 +24,9 @@ public class Person implements Serializable {
   @Id @CPF
   @Column(name = "CPF", length = 11,updatable = false)
   private String cpf;
-  @Column(name = "NAME", nullable = false, length = 30)
+  
   @NotEmpty
+  @Column(name = "NAME", nullable = false, length = 30)
   private String name;
 
   @Override
