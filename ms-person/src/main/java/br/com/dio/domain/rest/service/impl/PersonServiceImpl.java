@@ -20,6 +20,8 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTAINING;
 
@@ -43,7 +45,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
   }
-  
+
   @Override
   @Cacheable(value = "person")
   public Person findByCpf(String cpf) {
@@ -85,7 +87,11 @@ public class PersonServiceImpl implements PersonService {
         .withStringMatcher(CONTAINING);
     Example example = Example.of(person,matcher);
 
-    return repository.findAll(example);
+    return StreamSupport
+            .stream(repository.findAll(example)
+                    .spliterator(),false)
+            .toList();
+
   }
 
   private Person existsPerson(Person person) {
