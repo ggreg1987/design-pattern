@@ -91,8 +91,13 @@ public class PersonServiceImpl implements PersonService {
             .stream(repository.findAll(example)
                     .spliterator(),false)
             .toList();
-
   }
+
+  @CacheEvict(value = "person", allEntries = true)
+  public void clearPersonCache() {
+    log.info("Clearing Person cache...");
+  }
+
 
   private Person existsPerson(Person person) {
     if (repository.existsByCpf(person.getCpf())) {
