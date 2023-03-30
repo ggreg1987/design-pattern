@@ -71,7 +71,7 @@ public class PersonResource {
     return clearPersonCache();
   }
 
-  
+
 
   private PersonDTO toDTO(Person person) {
     var dto = mapper.convertValue(person, PersonDTO.class);
