@@ -70,6 +70,12 @@ public class PersonResource {
     return hateos(dto);
   }
 
+  @GetMapping("/clear")
+  @ResponseStatus(OK)
+  public String clearPersonCache() {
+    return clearPersonCache();
+  }
+
   private PersonDTO hateos(PersonDTO dto) {
     dto.add(linkTo(methodOn(PersonResource.class)
         .findByCpf(dto.getCpf())).withSelfRel());
