@@ -94,8 +94,9 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   @CacheEvict(value = "person", allEntries = true)
-  public void clearPersonCache() {
+  public String clearPersonCache() {
     log.info("Clearing Person cache...");
+    return "Student Cache cleared!";
   }
 
 
