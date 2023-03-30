@@ -4,7 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,10 +21,11 @@ import java.util.Objects;
 @Table(name = "PERSON")
 public class Person implements Serializable {
 
-  @Id
+  @Id @CPF
   @Column(name = "CPF", length = 11)
   private String cpf;
   @Column(name = "NAME", nullable = false, length = 30)
+  @NotEmpty
   private String name;
 
   @Override
