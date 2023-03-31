@@ -70,6 +70,11 @@ public class AddressResource {
     return new ResponseEntity<>("Address Cache cleared!", OK);
   }
 
+  private AddressDTO toDTO(Address address) {
+    var dto = mapper.convertValue(address, AddressDTO.class);
+    return hateos(dto);
+  }
+
   private AddressDTO hateos(AddressDTO dto) {
     dto.add(linkTo(methodOn(AddressResource.class)
         .findById(dto.getId())).withSelfRel());
