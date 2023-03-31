@@ -12,6 +12,7 @@ public class LoadBalance {
   public RouteLocator routes(RouteLocatorBuilder builder) {
     return builder.routes()
         .route(r -> r.path("/person/**").uri("lb://ms-person"))
+        .route(r -> r.path("/address/**").uri("lb://ms-address"))
         .build();
   }
 }
