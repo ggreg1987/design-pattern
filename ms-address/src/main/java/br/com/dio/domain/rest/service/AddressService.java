@@ -5,4 +5,5 @@ import br.com.dio.domain.entity.Address;
 public interface AddressService {
 
   Address save(Address address);
+  Address findById(Long id);
 }
