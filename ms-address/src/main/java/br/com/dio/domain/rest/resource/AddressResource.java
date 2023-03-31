@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -23,6 +24,13 @@ public class AddressResource {
   @ResponseStatus(CREATED)
   public AddressDTO create(@RequestBody Address address) {
     var entity = service.save(address);
+    return mapper.convertValue(entity, AddressDTO.class);
+  }
+
+  @GetMapping(value = "{id}",produces = APPLICATION_JSON_VALUE)
+  @ResponseStatus(OK)
+  public AddressDTO findByCpf(@PathVariable Long id) {
+    var entity = service.findById(id);
     return mapper.convertValue(entity, AddressDTO.class);
   }
 }
