@@ -31,4 +31,15 @@ public class AddressServiceImpl implements AddressService {
         .findById(id)
         .orElseThrow(() -> new AddressNotFoundException("Address not found"));
   }
+
+  @Override
+  @CachePut(value = "address", key = "#result.id")
+  public Address update(Address address, Long id) {
+    return repository
+        .findById(id)
+        .map(found -> {
+          found.setId(address.getId());
+          return address;
+        }).orElseThrow(() -> new AddressNotFoundException("Address not found"));
+  }
 }
