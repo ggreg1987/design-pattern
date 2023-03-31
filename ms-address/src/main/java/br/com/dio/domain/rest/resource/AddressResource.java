@@ -5,6 +5,7 @@ import br.com.dio.domain.rest.dto.AddressDTO;
 import br.com.dio.domain.rest.service.AddressService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,5 +60,11 @@ public class AddressResource {
         .stream()
         .map(entity -> mapper.convertValue(entity,AddressDTO.class))
         .collect(Collectors.toList());
+  }
+
+  @GetMapping("/clear")
+  public ResponseEntity<String> clearAddressCache() {
+    service.clearAddressCache();
+    return new ResponseEntity<>("Address Cache cleared!", OK);
   }
 }
