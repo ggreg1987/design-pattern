@@ -29,14 +29,14 @@ public class AddressResource {
   @ResponseStatus(CREATED)
   public AddressDTO create(@RequestBody Address address) {
     var entity = service.save(address);
-    return mapper.convertValue(entity, AddressDTO.class);
+    return toDTO(entity);
   }
 
   @GetMapping(value = "{id}",produces = APPLICATION_JSON_VALUE)
   @ResponseStatus(OK)
   public AddressDTO findById(@PathVariable Long id) {
     var entity = service.findById(id);
-    return mapper.convertValue(entity, AddressDTO.class);
+    return toDTO(entity);
   }
 
   @PutMapping(value = "{id}",produces = APPLICATION_JSON_VALUE,
@@ -45,7 +45,7 @@ public class AddressResource {
   public AddressDTO update(@RequestBody Address address ,
                            @PathVariable Long id) {
     var entity = service.findById(id);
-    return mapper.convertValue(entity, AddressDTO.class);
+    return toDTO(entity);
   }
 
   @DeleteMapping("{id}")
@@ -60,7 +60,7 @@ public class AddressResource {
     var entityList = service.findAll(address);
     return entityList
         .stream()
-        .map(entity -> mapper.convertValue(entity,AddressDTO.class))
+        .map(entity -> toDTO(entity))
         .collect(Collectors.toList());
   }
 
