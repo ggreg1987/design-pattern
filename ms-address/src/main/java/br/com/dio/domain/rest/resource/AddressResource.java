@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -29,7 +28,16 @@ public class AddressResource {
 
   @GetMapping(value = "{id}",produces = APPLICATION_JSON_VALUE)
   @ResponseStatus(OK)
-  public AddressDTO findByCpf(@PathVariable Long id) {
+  public AddressDTO findById(@PathVariable Long id) {
+    var entity = service.findById(id);
+    return mapper.convertValue(entity, AddressDTO.class);
+  }
+
+  @PutMapping(value = "{id}",produces = APPLICATION_JSON_VALUE,
+      consumes = APPLICATION_JSON_VALUE)
+  @ResponseStatus(SEE_OTHER)
+  public AddressDTO update(@RequestBody Address address ,
+                           @PathVariable Long id) {
     var entity = service.findById(id);
     return mapper.convertValue(entity, AddressDTO.class);
   }
