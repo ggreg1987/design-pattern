@@ -6,6 +6,7 @@ import br.com.dio.domain.rest.service.AddressService;
 import br.com.dio.exception.AddressNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,17 @@ public class AddressServiceImpl implements AddressService {
           found.setId(address.getId());
           return address;
         }).orElseThrow(() -> new AddressNotFoundException("Address not found"));
+  }
+
+  @Override
+  @CacheEvict(value = "address")
+  public void delete(Long id) {
+    return repository
+        .findById(id)
+        .map(found -> {
+          repository.deleteById(id);
+          log.info("Records deleted {}",found.getId());
+          return found;
+        }).orElseThrow(() -> new AddressBadRequestException("Address not found"));
   }
 }
