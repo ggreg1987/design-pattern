@@ -3,6 +3,7 @@ package br.com.dio.domain.rest.service.impl;
 import br.com.dio.domain.entity.Address;
 import br.com.dio.domain.repository.AddressRepository;
 import br.com.dio.domain.rest.service.AddressService;
+import br.com.dio.exception.AddressNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachePut;
