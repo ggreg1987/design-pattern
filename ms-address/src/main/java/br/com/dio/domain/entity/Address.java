@@ -1,5 +1,6 @@
 package br.com.dio.domain.entity;
 
+import br.com.dio.domain.microservice.MSPersonDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,10 @@ public class Address implements Serializable {
   @NotEmpty
   @Column(name = "ZIPCODE", nullable = false, length = 8)
   private String zipcode;
+
+  @ManyToOne
+  @JoinColumn(name = "PERSON_CPF")
+  private MSPersonDTO person;
 
   @Override
   public boolean equals(Object o) {
