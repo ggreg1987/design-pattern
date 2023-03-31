@@ -3,6 +3,7 @@ package br.com.dio.domain.rest.service.impl;
 import br.com.dio.domain.entity.Address;
 import br.com.dio.domain.repository.AddressRepository;
 import br.com.dio.domain.rest.service.AddressService;
+import br.com.dio.exception.AddressBadRequestException;
 import br.com.dio.exception.AddressNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
   @Override
   @CacheEvict(value = "address")
   public void delete(Long id) {
-    return repository
+    repository
         .findById(id)
         .map(found -> {
           repository.deleteById(id);
