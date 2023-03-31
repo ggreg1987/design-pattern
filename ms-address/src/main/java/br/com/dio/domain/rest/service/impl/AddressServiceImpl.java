@@ -10,7 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.StreamSupport;
+
+import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTAINING;
 
 @Service
 @Slf4j
@@ -56,4 +63,20 @@ public class AddressServiceImpl implements AddressService {
           return found;
         }).orElseThrow(() -> new AddressBadRequestException("Address not found"));
   }
+
+  @Override
+  public List<Address> findAll(Address address) {
+    var match = ExampleMatcher
+        .matching()
+        .withIgnoreCase()
+        .withStringMatcher(CONTAINING);
+
+    Example example = Example.of(address,match);
+    return StreamSupport
+        .stream(repository.findAll(example)
+            .spliterator(),false)
+        .toList();
+  }
+
+
 }
