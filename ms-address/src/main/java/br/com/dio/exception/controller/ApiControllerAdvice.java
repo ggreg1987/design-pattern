@@ -15,13 +15,16 @@ public class ApiControllerAdvice {
   @ExceptionHandler(AddressNotFoundException.class)
   @ResponseStatus(NOT_FOUND)
   public ApiError handleAddressNotFoundException(AddressNotFoundException ex) {
-    var msg = ex.getMessage();
-    return new ApiError(msg);
+    return message(ex);
   }
 
   @ExceptionHandler(AddressBadRequestException.class)
   @ResponseStatus(NOT_FOUND)
   public ApiError handleAddressBadRequestException(AddressBadRequestException ex) {
+    return message(ex);
+  }
+
+  private ApiError message(Exception ex) {
     var msg = ex.getMessage();
     return new ApiError(msg);
   }
