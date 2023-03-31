@@ -3,9 +3,9 @@ package br.com.dio.domain.rest.service.impl;
 import br.com.dio.domain.entity.Address;
 import br.com.dio.domain.repository.AddressRepository;
 import br.com.dio.domain.rest.service.AddressService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
 
   private final AddressRepository repository;
-  private final ObjectMapper mapper;
 
   @Override
+  @CachePut(value = "address", key = "#result.id")
   public Address save(Address address) {
-    return null;
+    return repository.save(address);
   }
 }

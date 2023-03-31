@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class CacheConfig {
 
   private final AddressRepository repository;
-  
+
   @Bean
   public CacheManager cacheManager() {
     SimpleCacheManager cacheManager = new SimpleCacheManager();
