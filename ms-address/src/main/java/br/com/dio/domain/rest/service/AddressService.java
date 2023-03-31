@@ -11,4 +11,5 @@ public interface AddressService {
   Address update(Address address,Long id);
   void delete(Long id);
   List<Address> findAll(Address address);
+  String clearAddressCache();
 }

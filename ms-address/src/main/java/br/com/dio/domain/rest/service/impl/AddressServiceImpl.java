@@ -78,5 +78,10 @@ public class AddressServiceImpl implements AddressService {
         .toList();
   }
 
-
+  @Override
+  @CacheEvict(value = "address", allEntries = true)
+  public String clearAddressCache() {
+    log.info("Clearing Address cache...");
+    return "Address Cache cleared!";
+  }
 }
