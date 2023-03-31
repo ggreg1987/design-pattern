@@ -3,6 +3,7 @@ package br.com.dio.domain.rest.resource;
 import br.com.dio.domain.entity.Address;
 import br.com.dio.domain.rest.dto.AddressDTO;
 import br.com.dio.domain.rest.service.AddressService;
+import br.com.dio.exception.CharacterLimitException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AddressResource {
   @PostMapping(produces = APPLICATION_JSON_VALUE,
       consumes = APPLICATION_JSON_VALUE)
   @ResponseStatus(CREATED)
-  public AddressDTO create(@RequestBody Address address) {
+  public AddressDTO create(@RequestBody Address address) throws CharacterLimitException {
     var entity = service.save(address);
     return toDTO(entity);
   }

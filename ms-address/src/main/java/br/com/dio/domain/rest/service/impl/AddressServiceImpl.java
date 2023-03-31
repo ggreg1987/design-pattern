@@ -5,6 +5,7 @@ import br.com.dio.domain.repository.AddressRepository;
 import br.com.dio.domain.rest.service.AddressService;
 import br.com.dio.exception.AddressBadRequestException;
 import br.com.dio.exception.AddressNotFoundException;
+import br.com.dio.exception.CharacterLimitException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,8 +29,12 @@ public class AddressServiceImpl implements AddressService {
 
   @Override
   @CachePut(value = "address", key = "#result.id")
-  public Address save(Address address) {
-    return repository.save(address);
+  public Address save(Address address) throws CharacterLimitException {
+    try {
+      return repository.save(address);
+    } catch (Exception e) {
+      throw new CharacterLimitException("Error saving address");
+    }
   }
 
   @Override
