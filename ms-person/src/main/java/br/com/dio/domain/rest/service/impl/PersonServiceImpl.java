@@ -37,12 +37,15 @@ public class PersonServiceImpl implements PersonService {
   @CachePut(value = "person", key = "#result.cpf")
   public Person save(Person person) throws CharacterLimitException {
     existsPerson(person);
-    try {
-      return saveAndSend(person);
-    } catch (Exception ex) {
-      throw new CharacterLimitException("Character error.");
+    if(person.getName().length() < 10) {
+      throw new CharacterLimitException("Put Full Name");
+    } else {
+      try {
+        return saveAndSend(person);
+      } catch (Exception ex) {
+        throw new CharacterLimitException("Character error.");
+      }
     }
-
   }
 
   @Override

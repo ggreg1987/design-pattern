@@ -5,6 +5,7 @@ import br.com.dio.domain.rest.dto.PersonDTO;
 import br.com.dio.domain.rest.service.PersonService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,8 +49,8 @@ public class PersonResource {
 
   @DeleteMapping("{cpf}")
   @ResponseStatus(NO_CONTENT)
-  public String delete(@PathVariable String cpf) {
-    return service.delete(cpf);
+  public void delete(@PathVariable String cpf) {
+    service.delete(cpf);
   }
 
   @GetMapping(produces = APPLICATION_JSON_VALUE)
@@ -63,9 +64,9 @@ public class PersonResource {
   }
 
   @GetMapping("/clear")
-  @ResponseStatus(OK)
-  public String clearPersonCache() {
-    return clearPersonCache();
+  public ResponseEntity<String> clearPersonCache() {
+    service.clearPersonCache();
+    return new ResponseEntity<>("Person Cache cleared!", OK);
   }
 
 
