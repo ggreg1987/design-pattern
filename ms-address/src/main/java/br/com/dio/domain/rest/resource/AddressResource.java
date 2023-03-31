@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -66,5 +68,11 @@ public class AddressResource {
   public ResponseEntity<String> clearAddressCache() {
     service.clearAddressCache();
     return new ResponseEntity<>("Address Cache cleared!", OK);
+  }
+
+  private AddressDTO hateos(AddressDTO dto) {
+    dto.add(linkTo(methodOn(AddressResource.class)
+        .findById(dto.getId())).withSelfRel());
+    return dto;
   }
 }
