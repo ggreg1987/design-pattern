@@ -41,4 +41,10 @@ public class AddressResource {
     var entity = service.findById(id);
     return mapper.convertValue(entity, AddressDTO.class);
   }
+
+  @DeleteMapping("{id}")
+  @ResponseStatus(NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    service.delete(id);
+  }
 }
