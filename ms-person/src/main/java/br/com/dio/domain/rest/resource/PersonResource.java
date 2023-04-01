@@ -3,6 +3,7 @@ package br.com.dio.domain.rest.resource;
 import br.com.dio.domain.entity.Person;
 import br.com.dio.domain.rest.dto.PersonDTO;
 import br.com.dio.domain.rest.service.PersonService;
+import br.com.dio.exception.CharacterLimitException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class PersonResource {
   @PostMapping(produces = APPLICATION_JSON_VALUE,
       consumes = APPLICATION_JSON_VALUE)
   @ResponseStatus(CREATED)
-  public PersonDTO create(@RequestBody Person person) throws Exception {
+  public PersonDTO create(@RequestBody Person person) throws CharacterLimitException {
     var entity = service.save(person);
     return toDTO(entity);
   }
