@@ -37,7 +37,7 @@ public class Address implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "PERSON_CPF")
-  private MSPersonDTO person;
+  private Person person;
 
   @Override
   public boolean equals(Object o) {
