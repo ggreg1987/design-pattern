@@ -1,5 +1,6 @@
 package br.com.dio.domain.rest.dto;
 
+import br.com.dio.domain.microservice.MSPersonDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
@@ -16,4 +17,5 @@ public class AddressDTO
   private String street;
   private String number;
   private String zipcode;
+  private MSPersonDTO personDTO;
 }
