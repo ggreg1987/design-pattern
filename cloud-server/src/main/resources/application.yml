@@ -1,6 +1,11 @@
 spring:
   application:
     name: cloud-server
+  security:
+    user:
+      name: greg
+      password: 12345
+
 
 server:
   port: 8761
